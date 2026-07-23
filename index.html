@@ -1,109 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROI Calculator — Return on Investment | Tabutility</title>
-  <meta name="description" content="Calculate return on investment (ROI), annualised return, and profit/loss for any investment. Simple and detailed ROI analysis." />
-  <meta name="keywords" content="roi calculator, return on investment, investment return, annualised return, profit calculator" />
-  <link rel="canonical" href="https://roi.tabutility.com/" />
-  <meta property="og:title" content="ROI Calculator — Return on Investment" />
-  <meta property="og:description" content="Calculate ROI, annualised return and profit for any investment instantly." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>" />
-  <meta name="robots" content="index, follow" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-78VZWJ5B1W');</script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Online Metronome — Tabutility</title>
+<meta name="description" content="Free online metronome. Set your BPM, tap tempo, choose time signature. Perfect for musicians and practice sessions."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-78VZWJ5B1W');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7039091592734005" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;align-items:center;gap:16px}nav a{color:#94a3b8;text-decoration:none;font-size:14px}nav a:hover{color:#f1f5f9}nav .brand{color:#38bdf8;font-weight:700;font-size:18px}.ad-banner{background:#1e293b;border-bottom:1px solid #334155;padding:8px;text-align:center}</style>
 </head>
-<body style="margin:0;background:#f8faff;font-family:'Segoe UI',Arial,sans-serif">
+<body>
+<nav><span class="brand">⚡ Tabutility</span><a href="https://tabutility.com">← All Tools</a></nav>
+<div class="ad-banner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 <div id="root"></div>
 <script type="text/babel">
 //<![CDATA[
-const { useState } = React;
-function fmt(n){return '$'+Math.abs(Math.round(n)).toLocaleString();}
-function fmtPct(n){return (n>=0?'+':'')+n.toFixed(2)+'%';}
+const { useState, useEffect, useRef } = React;
 
-function App() {
-  const [initial, setInitial] = useState(10000);
-  const [final, setFinal] = useState(14500);
-  const [years, setYears] = useState(3);
-  const [fees, setFees] = useState(0);
+const TEMPOS = [
+  {name:'Larghissimo',max:24},{name:'Largo',max:40},{name:'Larghetto',max:60},
+  {name:'Adagio',max:66},{name:'Andante',max:76},{name:'Moderato',max:108},
+  {name:'Allegretto',max:120},{name:'Allegro',max:156},{name:'Vivace',max:176},
+  {name:'Presto',max:200},{name:'Prestissimo',max:300},
+];
 
-  const inv = Number(initial)||0;
-  const fin = Number(final)||0;
-  const yrs = Number(years)||1;
-  const fee = Number(fees)||0;
+function getTempoName(bpm) {
+  for (const t of TEMPOS) { if (bpm <= t.max) return t.name; }
+  return 'Prestissimo';
+}
 
-  const netFinal = fin - fee;
-  const profit = netFinal - inv;
-  const roi = inv > 0 ? (profit / inv * 100) : 0;
-  const annualised = inv > 0 && yrs > 0 ? (Math.pow(netFinal/inv, 1/yrs)-1)*100 : 0;
-  const positive = profit >= 0;
+function click(ctx, isAccent) {
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.frequency.value = isAccent ? 1200 : 900;
+  g.gain.setValueAtTime(isAccent ? 0.6 : 0.35, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+  o.start(ctx.currentTime);
+  o.stop(ctx.currentTime + 0.05);
+}
+
+export default function Metronome() {
+  const [bpm, setBpm] = useState(120);
+  const [playing, setPlaying] = useState(false);
+  const [beat, setBeat] = useState(0);
+  const [timeSig, setTimeSig] = useState(4);
+  const [tapTimes, setTapTimes] = useState([]);
+  const [pendulum, setPendulum] = useState(0); // -1 left, 1 right
+  const audioRef = useRef(null);
+  const intervalRef = useRef(null);
+  const beatRef = useRef(0);
+  const bpmRef = useRef(bpm);
+
+  useEffect(() => { bpmRef.current = bpm; }, [bpm]);
+
+  const getCtx = () => { if (!audioRef.current) audioRef.current = new AudioContext(); return audioRef.current; };
+
+  useEffect(() => {
+    if (playing) {
+      const schedule = () => {
+        const interval = 60000 / bpmRef.current;
+        const isAccent = beatRef.current % timeSig === 0;
+        try { click(getCtx(), isAccent); } catch(e) {}
+        setBeat(beatRef.current % timeSig);
+        setPendulum(p => p === 0 ? 1 : -p);
+        beatRef.current++;
+        intervalRef.current = setTimeout(schedule, interval);
+      };
+      schedule();
+    } else {
+      clearTimeout(intervalRef.current);
+      beatRef.current = 0;
+      setBeat(0);
+      setPendulum(0);
+    }
+    return () => clearTimeout(intervalRef.current);
+  }, [playing, timeSig]);
+
+  const tap = () => {
+    const now = Date.now();
+    const newTaps = [...tapTimes, now].filter(t => now - t < 3000).slice(-8);
+    setTapTimes(newTaps);
+    if (newTaps.length >= 2) {
+      const intervals = [];
+      for (let i = 1; i < newTaps.length; i++) intervals.push(newTaps[i] - newTaps[i-1]);
+      const avg = intervals.reduce((a,b)=>a+b,0)/intervals.length;
+      const newBpm = Math.round(60000 / avg);
+      if (newBpm >= 20 && newBpm <= 300) setBpm(newBpm);
+    }
+  };
+
+  const tempoName = getTempoName(bpm);
+  const pAngle = pendulum * 30;
 
   return (
-    <div style={{maxWidth:520,margin:'0 auto',paddingBottom:40}}>
-      <div style={{background:'#1a1a2e',padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <a href="https://tabutility.com" style={{color:'#a5b4fc',textDecoration:'none',fontSize:14}}>← All Tools</a>
-        <span style={{color:'#fff',fontWeight:700,fontSize:15}}>⚡ Tabutility</span>
-      </div>
-      <div style={{background:'linear-gradient(135deg,#0891b2,#0e7490)',padding:'28px 20px',textAlign:'center',color:'#fff'}}>
-        <div style={{fontSize:36,marginBottom:8}}>📈</div>
-        <h1 style={{margin:'0 0 6px',fontSize:22,fontWeight:900}}>ROI Calculator</h1>
-        <p style={{margin:0,fontSize:13,opacity:0.85}}>Return on investment · annualised return · profit/loss</p>
-      </div>
-      <div style={{padding:20}}>
-        <div style={{background:'#fff',borderRadius:14,padding:20,boxShadow:'0 2px 12px rgba(0,0,0,0.06)',marginBottom:16}}>
-          {[['Initial Investment','$',initial,setInitial],['Final Value','$',final,setFinal],['Fees / Costs','$',fees,setFees]].map(([label,prefix,val,setter])=>(
-            <div key={label} style={{marginBottom:14}}>
-              <label style={{fontSize:13,fontWeight:600,color:'#374151',display:'block',marginBottom:6}}>{label}</label>
-              <div style={{position:'relative'}}>
-                <span style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)',color:'#6b7280'}}>{prefix}</span>
-                <input type="number" value={val} onChange={e=>setter(e.target.value)}
-                  style={{width:'100%',padding:'11px 12px 11px 28px',borderRadius:10,border:'2px solid #e5e7eb',fontSize:16,boxSizing:'border-box'}} />
-              </div>
-            </div>
-          ))}
-          <div>
-            <label style={{fontSize:13,fontWeight:600,color:'#374151',display:'block',marginBottom:6}}>Investment Period (years)</label>
-            <input type="number" value={years} onChange={e=>setYears(e.target.value)} min={0.1} step={0.5}
-              style={{width:'100%',padding:'11px 12px',borderRadius:10,border:'2px solid #e5e7eb',fontSize:16,boxSizing:'border-box'}} />
+    <div style={{maxWidth:520,margin:'40px auto',padding:'0 20px'}}>
+      <h1 style={{textAlign:'center',fontSize:28,fontWeight:700,marginBottom:8}}>Online Metronome</h1>
+      <p style={{textAlign:'center',color:'#94a3b8',marginBottom:32}}>BPM control · Tap tempo · Time signature · Accent on beat 1</p>
+
+      <div style={{background:'#1e293b',borderRadius:20,padding:'32px 24px',textAlign:'center',border:'1px solid #334155',marginBottom:20}}>
+        {/* Pendulum */}
+        <div style={{height:180,display:'flex',justifyContent:'center',alignItems:'flex-start',marginBottom:24,position:'relative'}}>
+          <div style={{width:4,height:160,background:'#334155',borderRadius:2,position:'relative',transformOrigin:'top center',transform:`rotate(${pAngle}deg)`,transition:playing?`transform ${60/bpm*0.45}s ease-in-out`:'none'}}>
+            <div style={{width:28,height:28,borderRadius:'50%',background:beat===0&&playing?'#38bdf8':'#475569',position:'absolute',bottom:-14,left:'50%',transform:'translateX(-50%)',boxShadow:beat===0&&playing?'0 0 20px #38bdf8':'none',transition:'background 0.05s,box-shadow 0.05s'}}/>
           </div>
         </div>
 
-        <div style={{background: positive?'#f0fdf4':'#fef2f2',borderRadius:14,padding:24,textAlign:'center',marginBottom:16,boxShadow:'0 2px 12px rgba(0,0,0,0.06)'}}>
-          <div style={{fontSize:13,fontWeight:600,color:'#6b7280',marginBottom:4}}>TOTAL ROI</div>
-          <div style={{fontSize:52,fontWeight:900,color: positive?'#059669':'#dc2626'}}>{fmtPct(roi)}</div>
-          <div style={{fontSize:15,color: positive?'#059669':'#dc2626',fontWeight:700}}>{positive?'+':''}{fmt(profit)} {positive?'profit':'loss'}</div>
-        </div>
-
-        <div style={{background:'#fff',borderRadius:14,padding:20,boxShadow:'0 2px 12px rgba(0,0,0,0.06)'}}>
-          {[
-            ['Initial Investment', fmt(inv)],
-            ['Final Value (before fees)', fmt(fin)],
-            ['Fees / Transaction Costs', fee > 0 ? '-'+fmt(fee) : '$0'],
-            ['Net Final Value', fmt(netFinal)],
-            ['Net Profit / Loss', (positive?'+':'-')+fmt(profit)],
-            ['Total ROI', fmtPct(roi)],
-            ['Annualised Return (CAGR)', fmtPct(annualised)+' / yr'],
-          ].map(([l,v])=>(
-            <div key={l} style={{display:'flex',justifyContent:'space-between',padding:'9px 0',borderBottom:'1px solid #f0f0f0',fontSize:14}}>
-              <span style={{color:'#6b7280'}}>{l}</span>
-              <strong style={{color: l.includes('Loss')||l.includes('Fees')&&fee>0?'#dc2626':l.includes('ROI')||l.includes('Profit')||l.includes('CAGR')?positive?'#059669':'#dc2626':'#1a1a2e'}}>{v}</strong>
-            </div>
+        {/* Beat indicators */}
+        <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:24}}>
+          {Array.from({length:timeSig},(_,i) => (
+            <div key={i} style={{width:20,height:20,borderRadius:'50%',background:playing&&beat===i?(i===0?'#38bdf8':'#22c55e'):'#334155',transition:'background 0.05s',boxShadow:playing&&beat===i?`0 0 12px ${i===0?'#38bdf8':'#22c55e'}`:'none'}}/>
           ))}
         </div>
-        <div style={{background:'#ecfeff',borderRadius:12,padding:16,marginTop:16,fontSize:13,color:'#0e7490',lineHeight:1.6}}>
-          <strong>CAGR</strong> (Compound Annual Growth Rate) is the annualised ROI — useful when comparing investments held for different time periods.
+
+        {/* BPM display */}
+        <div style={{marginBottom:24}}>
+          <div style={{fontFamily:'monospace',fontSize:80,fontWeight:300,color:'#f1f5f9',lineHeight:1}}>{bpm}</div>
+          <div style={{fontSize:16,color:'#94a3b8',marginTop:4}}>{tempoName}</div>
+        </div>
+
+        {/* BPM slider */}
+        <input type="range" min="20" max="300" value={bpm} onChange={e=>setBpm(parseInt(e.target.value))}
+          style={{width:'100%',marginBottom:16,accentColor:'#38bdf8'}}/>
+        <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#475569',marginBottom:20}}>
+          <span>20 BPM</span><span>300 BPM</span>
+        </div>
+
+        {/* +/- buttons */}
+        <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:20,flexWrap:'wrap'}}>
+          {[-10,-5,-1,'+1','+5','+10'].map(d => (
+            <button key={d} onClick={() => setBpm(b => Math.min(300,Math.max(20,b+(typeof d==='number'?d:parseInt(d)))))}
+              style={{background:'#334155',color:'#f1f5f9',border:'none',borderRadius:8,padding:'8px 14px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{d}</button>
+          ))}
+        </div>
+
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginBottom:16}}>
+          <button onClick={() => setPlaying(p=>!p)}
+            style={{background:playing?'#ef4444':'#22c55e',color:'#fff',border:'none',borderRadius:12,padding:'14px 40px',fontSize:18,fontWeight:700,cursor:'pointer'}}>
+            {playing ? '⏹ Stop' : '▶ Start'}
+          </button>
+          <button onClick={tap} style={{background:'#334155',color:'#f1f5f9',border:'none',borderRadius:12,padding:'14px 28px',fontSize:18,fontWeight:700,cursor:'pointer'}}>Tap</button>
+        </div>
+
+        {/* Time signature */}
+        <div style={{display:'flex',gap:8,justifyContent:'center',alignItems:'center'}}>
+          <span style={{fontSize:14,color:'#64748b'}}>Time signature:</span>
+          {[2,3,4,5,6,7,8].map(n => (
+            <button key={n} onClick={() => { setTimeSig(n); beatRef.current=0; setBeat(0); }}
+              style={{background:timeSig===n?'#38bdf8':'#334155',color:timeSig===n?'#0f172a':'#94a3b8',border:'none',borderRadius:8,padding:'6px 12px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{n}/4</button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{background:'#1e293b',borderRadius:16,padding:16,border:'1px solid #334155'}}>
+        <h2 style={{fontSize:15,fontWeight:600,marginBottom:10}}>Common Tempos</h2>
+        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+          {[{n:'Slow practice',b:60},{n:'Andante',b:76},{n:'Moderato',b:96},{n:'Allegro',b:132},{n:'Vivace',b:168},{n:'Presto',b:188}].map(t => (
+            <button key={t.b} onClick={()=>setBpm(t.b)} style={{background:'#0f172a',color:'#94a3b8',border:'1px solid #334155',borderRadius:8,padding:'7px 12px',fontSize:13,cursor:'pointer'}}>
+              {t.n} <span style={{color:'#38bdf8',fontWeight:700}}>{t.b}</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>
   );
 }
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Metronome />);
 //]]>
 </script>
 </body>
