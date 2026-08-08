@@ -7,6 +7,7 @@
   <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
 <title>Online Metronome — Tabutility</title>
 <meta name="description" content="Free online metronome. Set your BPM, tap tempo, choose time signature. Perfect for musicians and practice sessions."/>
 <script>window.addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-78VZWJ5B1W';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-78VZWJ5B1W');});</script>
@@ -14,7 +15,7 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;align-items:center;gap:16px}nav a{color:#94a3b8;text-decoration:none;font-size:14px}nav a:hover{color:#f1f5f9}nav .brand{color:#38bdf8;font-weight:700;font-size:18px}.ad-banner{background:#1e293b;border-bottom:1px solid #334155;padding:4px;text-align:center}</style>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f4;color:#0f172a;min-height:100vh}nav{background:#ffffff;border-bottom:1px solid #e2e8f0;padding:14px 24px;display:flex;align-items:center;gap:16px}nav a{color:#64748b;text-decoration:none;font-size:14px}nav a:hover{color:#0f172a}nav .brand{color:#0f172a;font-weight:700;font-size:18px}.ad-banner{background:#ffffff;border-bottom:1px solid #e2e8f0;padding:4px;text-align:center}</style>
   <link rel="canonical" href="https://metronome.tabutility.com/"/>
   <meta property="og:title" content="Online Metronome — Tabutility"/>
   <meta property="og:description" content="Free online metronome. Set your BPM, tap tempo, choose time signature. Perfect for musicians and practice sessions."/>
@@ -29,7 +30,15 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tabutility","item":"https://tabutility.com"},{"@type":"ListItem","position":2,"name":"Productivity","item":"https://tabutility.com/#productivity"},{"@type":"ListItem","position":3,"name":"Online Metronome","item":"https://metronome.tabutility.com/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the Online Metronome free?","acceptedAnswer":{"@type":"Answer","text":"Yes — completely free, no sign-up needed."}},{"@type":"Question","name":"Does the Online Metronome work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes — once loaded, it works without an internet connection."}},{"@type":"Question","name":"Can I use the Online Metronome on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes — works on any device."}},{"@type":"Question","name":"Does the Online Metronome make a sound?","acceptedAnswer":{"@type":"Answer","text":"Yes — audio alerts are supported in modern browsers. Make sure your volume is on."}}]}</script>
   <meta name="theme-color" content="#1a1a2e" />
-  </head>
+  <style id="tabutility-brand">
+/* empty ad slots: reserve space, no bordered box */
+.ad-banner,.ad-slot,.ad-container{background:transparent!important;border:none!important;border-bottom:none!important;box-shadow:none!important}
+ins.adsbygoogle,.ad-banner iframe,.ad-slot iframe{visibility:hidden!important}
+ins.adsbygoogle[data-ad-status="filled"],.ad-banner ins[data-ad-status="filled"] iframe,.ad-slot ins[data-ad-status="filled"] iframe{visibility:visible!important}
+nav .brand{color:#0f172a}
+body{-webkit-font-smoothing:antialiased}
+</style>
+</head>
 <body>
 <nav><span class="brand">⚡ Tabutility</span><a href="https://tabutility.com">← All Tools</a></nav>
 <div class="ad-banner"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-7039091592734005" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
@@ -117,32 +126,32 @@ export default function Metronome() {
   return (
     <div style={{maxWidth:520,margin:'40px auto',padding:'0 20px'}}>
       <h1 style={{textAlign:'center',fontSize:28,fontWeight:700,marginBottom:8}}>Online Metronome</h1>
-      <p style={{textAlign:'center',color:'#94a3b8',marginBottom:32}}>BPM control · Tap tempo · Time signature · Accent on beat 1</p>
+      <p style={{textAlign:'center',color:'#64748b',marginBottom:32}}>BPM control · Tap tempo · Time signature · Accent on beat 1</p>
 
-      <div style={{background:'#1e293b',borderRadius:20,padding:'32px 24px',textAlign:'center',border:'1px solid #334155',marginBottom:20}}>
+      <div style={{background:'#ffffff',borderRadius:20,padding:'32px 24px',textAlign:'center',border:'1px solid #e2e8f0',marginBottom:20}}>
         {/* Pendulum */}
         <div style={{height:180,display:'flex',justifyContent:'center',alignItems:'flex-start',marginBottom:24,position:'relative'}}>
-          <div style={{width:4,height:160,background:'#334155',borderRadius:2,position:'relative',transformOrigin:'top center',transform:`rotate(${pAngle}deg)`,transition:playing?`transform ${60/bpm*0.45}s ease-in-out`:'none'}}>
-            <div style={{width:28,height:28,borderRadius:'50%',background:beat===0&&playing?'#38bdf8':'#475569',position:'absolute',bottom:-14,left:'50%',transform:'translateX(-50%)',boxShadow:beat===0&&playing?'0 0 20px #38bdf8':'none',transition:'background 0.05s,box-shadow 0.05s'}}/>
+          <div style={{width:4,height:160,background:'#e2e8f0',borderRadius:2,position:'relative',transformOrigin:'top center',transform:`rotate(${pAngle}deg)`,transition:playing?`transform ${60/bpm*0.45}s ease-in-out`:'none'}}>
+            <div style={{width:28,height:28,borderRadius:'50%',background:beat===0&&playing?'#0f172a':'#475569',position:'absolute',bottom:-14,left:'50%',transform:'translateX(-50%)',boxShadow:beat===0&&playing?'0 0 20px #0f172a':'none',transition:'background 0.05s,box-shadow 0.05s'}}/>
           </div>
         </div>
 
         {/* Beat indicators */}
         <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:24}}>
           {Array.from({length:timeSig},(_,i) => (
-            <div key={i} style={{width:20,height:20,borderRadius:'50%',background:playing&&beat===i?(i===0?'#38bdf8':'#22c55e'):'#334155',transition:'background 0.05s',boxShadow:playing&&beat===i?`0 0 12px ${i===0?'#38bdf8':'#22c55e'}`:'none'}}/>
+            <div key={i} style={{width:20,height:20,borderRadius:'50%',background:playing&&beat===i?(i===0?'#0f172a':'#22c55e'):'#e2e8f0',transition:'background 0.05s',boxShadow:playing&&beat===i?`0 0 12px ${i===0?'#0f172a':'#22c55e'}`:'none'}}/>
           ))}
         </div>
 
         {/* BPM display */}
         <div style={{marginBottom:24}}>
-          <div style={{fontFamily:'monospace',fontSize:80,fontWeight:300,color:'#f1f5f9',lineHeight:1}}>{bpm}</div>
-          <div style={{fontSize:16,color:'#94a3b8',marginTop:4}}>{tempoName}</div>
+          <div style={{fontFamily:'monospace',fontSize:80,fontWeight:300,color:'#0f172a',lineHeight:1}}>{bpm}</div>
+          <div style={{fontSize:16,color:'#64748b',marginTop:4}}>{tempoName}</div>
         </div>
 
         {/* BPM slider */}
         <input type="range" min="20" max="300" value={bpm} onChange={e=>setBpm(parseInt(e.target.value))}
-          style={{width:'100%',marginBottom:16,accentColor:'#38bdf8'}}/>
+          style={{width:'100%',marginBottom:16,accentColor:'#0f172a'}}/>
         <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#475569',marginBottom:20}}>
           <span>20 BPM</span><span>300 BPM</span>
         </div>
@@ -151,7 +160,7 @@ export default function Metronome() {
         <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:20,flexWrap:'wrap'}}>
           {[-10,-5,-1,'+1','+5','+10'].map(d => (
             <button key={d} onClick={() => setBpm(b => Math.min(300,Math.max(20,b+(typeof d==='number'?d:parseInt(d)))))}
-              style={{background:'#334155',color:'#f1f5f9',border:'none',borderRadius:8,padding:'8px 14px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{d}</button>
+              style={{background:'#e2e8f0',color:'#0f172a',border:'none',borderRadius:8,padding:'8px 14px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{d}</button>
           ))}
         </div>
 
@@ -160,7 +169,7 @@ export default function Metronome() {
             style={{background:playing?'#ef4444':'#22c55e',color:'#fff',border:'none',borderRadius:12,padding:'14px 40px',fontSize:18,fontWeight:700,cursor:'pointer'}}>
             {playing ? '⏹ Stop' : '▶ Start'}
           </button>
-          <button onClick={tap} style={{background:'#334155',color:'#f1f5f9',border:'none',borderRadius:12,padding:'14px 28px',fontSize:18,fontWeight:700,cursor:'pointer'}}>Tap</button>
+          <button onClick={tap} style={{background:'#e2e8f0',color:'#0f172a',border:'none',borderRadius:12,padding:'14px 28px',fontSize:18,fontWeight:700,cursor:'pointer'}}>Tap</button>
         </div>
 
         {/* Time signature */}
@@ -168,17 +177,17 @@ export default function Metronome() {
           <span style={{fontSize:14,color:'#64748b'}}>Time signature:</span>
           {[2,3,4,5,6,7,8].map(n => (
             <button key={n} onClick={() => { setTimeSig(n); beatRef.current=0; setBeat(0); }}
-              style={{background:timeSig===n?'#38bdf8':'#334155',color:timeSig===n?'#0f172a':'#94a3b8',border:'none',borderRadius:8,padding:'6px 12px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{n}/4</button>
+              style={{background:timeSig===n?'#0f172a':'#e2e8f0',color:timeSig===n?'#f8f7f4':'#64748b',border:'none',borderRadius:8,padding:'6px 12px',fontSize:14,fontWeight:600,cursor:'pointer'}}>{n}/4</button>
           ))}
         </div>
       </div>
 
-      <div style={{background:'#1e293b',borderRadius:16,padding:16,border:'1px solid #334155'}}>
+      <div style={{background:'#ffffff',borderRadius:16,padding:16,border:'1px solid #e2e8f0'}}>
         <h2 style={{fontSize:15,fontWeight:600,marginBottom:10}}>Common Tempos</h2>
         <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
           {[{n:'Slow practice',b:60},{n:'Andante',b:76},{n:'Moderato',b:96},{n:'Allegro',b:132},{n:'Vivace',b:168},{n:'Presto',b:188}].map(t => (
-            <button key={t.b} onClick={()=>setBpm(t.b)} style={{background:'#0f172a',color:'#94a3b8',border:'1px solid #334155',borderRadius:8,padding:'7px 12px',fontSize:13,cursor:'pointer'}}>
-              {t.n} <span style={{color:'#38bdf8',fontWeight:700}}>{t.b}</span>
+            <button key={t.b} onClick={()=>setBpm(t.b)} style={{background:'#f8f7f4',color:'#64748b',border:'1px solid #e2e8f0',borderRadius:8,padding:'7px 12px',fontSize:13,cursor:'pointer'}}>
+              {t.n} <span style={{color:'#0f172a',fontWeight:700}}>{t.b}</span>
             </button>
           ))}
         </div>
@@ -193,23 +202,23 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Metronome />);
 
 <div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:24px;margin-bottom:8px;padding:0 16px">
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
-    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Related Tools</h2>
+    <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Related Tools</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
-    <a href="https://stopwatch.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-      <div style="font-size:13px;font-weight:600;color:#f1f5f9">Online Stopwatch</div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+    <a href="https://stopwatch.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <div style="font-size:13px;font-weight:600;color:#0f172a">Online Stopwatch</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
     </a>
-    <a href="https://countdown-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-      <div style="font-size:13px;font-weight:600;color:#f1f5f9">Countdown Timer</div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+    <a href="https://countdown-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <div style="font-size:13px;font-weight:600;color:#0f172a">Countdown Timer</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
     </a>
-    <a href="https://pomodoro-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-      <div style="font-size:13px;font-weight:600;color:#f1f5f9">Pomodoro Timer</div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+    <a href="https://pomodoro-timer.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <div style="font-size:13px;font-weight:600;color:#0f172a">Pomodoro Timer</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
     </a>
-    <a href="https://alarm-clock.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
-      <div style="font-size:13px;font-weight:600;color:#f1f5f9">Online Alarm Clock</div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:2px">Productivity</div>
+    <a href="https://alarm-clock.tabutility.com/" style="display:block;background:rgba(255,255,255,0.07);border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <div style="font-size:13px;font-weight:600;color:#0f172a">Online Alarm Clock</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px">Productivity</div>
     </a>
     </div>
   </div>
@@ -217,22 +226,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Metronome />);
 
 <div style="max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px;margin-bottom:24px;padding:0 16px">
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 24px">
-    <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Frequently Asked Questions</h2>
+    <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Frequently Asked Questions</h2>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Is the Online Metronome free?</div>
-      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — completely free, no sign-up needed.</div>
+      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Is the Online Metronome free?</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — completely free, no sign-up needed.</div>
     </div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does the Online Metronome work offline?</div>
-      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — once loaded, it works without an internet connection.</div>
+      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Does the Online Metronome work offline?</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — once loaded, it works without an internet connection.</div>
     </div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Can I use the Online Metronome on mobile?</div>
-      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — works on any device.</div>
+      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Can I use the Online Metronome on mobile?</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — works on any device.</div>
     </div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0">
-      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px">Does the Online Metronome make a sound?</div>
-      <div style="font-size:13px;color:#94a3b8;line-height:1.5">Yes — audio alerts are supported in modern browsers. Make sure your volume is on.</div>
+      <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px">Does the Online Metronome make a sound?</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.5">Yes — audio alerts are supported in modern browsers. Make sure your volume is on.</div>
     </div>
   </div>
 </div>
@@ -259,30 +268,30 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Metronome />);
 </script>
 
 <!-- embed-widget -->
-<div style="max-width:640px;margin:0 auto 32px;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:18px">
-  <h2 style="font-size:15px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Embed This Tool</h2>
+<div style="max-width:640px;margin:0 auto 32px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:18px">
+  <h2 style="font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Embed This Tool</h2>
   <p style="font-size:13px;color:#64748b;margin-bottom:12px">Add this Online Metronome to your website or blog for free — just paste this code:</p>
-  <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px;font-family:monospace;font-size:12px;color:#7dd3fc;word-break:break-all;margin-bottom:10px" id="embed-code">&lt;iframe src=&quot;https://metronome.tabutility.com/&quot; width=&quot;100%&quot; height=&quot;600&quot; frameborder=&quot;0&quot; style=&quot;border-radius:12px&quot; title=&quot;Online Metronome by Tabutility&quot;&gt;&lt;/iframe&gt;
+  <div style="background:#f8f7f4;border:1px solid #e2e8f0;border-radius:8px;padding:12px;font-family:'Inter',monospace;font-size:12px;color:#7dd3fc;word-break:break-all;margin-bottom:10px" id="embed-code">&lt;iframe src=&quot;https://metronome.tabutility.com/&quot; width=&quot;100%&quot; height=&quot;600&quot; frameborder=&quot;0&quot; style=&quot;border-radius:12px&quot; title=&quot;Online Metronome by Tabutility&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:12px&quot;&gt;&lt;a href=&quot;https://metronome.tabutility.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Online Metronome&lt;/a&gt; by &lt;a href=&quot;https://tabutility.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Tabutility&lt;/a&gt;&lt;/p&gt;</div>
-  <button onclick="navigator.clipboard.writeText(document.getElementById('embed-code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Embed Code',2000)})" style="background:#38bdf8;color:#0f172a;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer">Copy Embed Code</button>
+  <button onclick="navigator.clipboard.writeText(document.getElementById('embed-code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Embed Code',2000)})" style="background:#0f172a;color:#f8f7f4;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer">Copy Embed Code</button>
   <span style="font-size:11px;color:#475569;margin-left:12px">Free to use — the credit link helps others find the tool</span>
 </div>
-<div style="margin:0 auto 24px;max-width:640px;background:#1e293b;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid #334155" onclick="window.open('https://www.amazon.com/s?k=productivity+time+management+books&tag=tabutility-20','_blank','noopener noreferrer')" title="Boost your productivity?">
+<div style="margin:0 auto 24px;max-width:640px;background:#ffffff;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid #e2e8f0" onclick="window.open('https://www.amazon.com/s?k=productivity+time+management+books&tag=tabutility-20','_blank','noopener noreferrer')" title="Boost your productivity?">
   <span style="font-size:28px;flex-shrink:0">📚</span>
   <div style="min-width:0">
-    <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:3px">Boost your productivity?</div>
-    <div style="font-size:12px;color:#94a3b8">Browse productivity books <span style="color:#f59e0b;white-space:nowrap">→ Browse on Amazon</span></div>
+    <div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:3px">Boost your productivity?</div>
+    <div style="font-size:12px;color:#64748b">Browse productivity books <span style="color:#f59e0b;white-space:nowrap">→ Browse on Amazon</span></div>
     <div style="font-size:10px;color:#475569;margin-top:3px">As an Amazon Associate we earn from qualifying purchases.</div>
   </div>
 </div>
 <section id="seo-content">
   <style>
-    #seo-content{max-width:760px;margin:2.5rem auto;padding:0 1.25rem 3rem;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#334155;line-height:1.7}
+    #seo-content{max-width:760px;margin:2.5rem auto;padding:0 1.25rem 3rem;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:#334155;line-height:1.7}
     #seo-content h2{font-size:1.35rem;color:#0f172a;margin:2rem 0 .75rem}
     #seo-content h3{font-size:1.05rem;color:#0f172a;margin:1.25rem 0 .5rem}
     #seo-content p,#seo-content li{font-size:.95rem}
     #seo-content .example{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0}
-    @media (prefers-color-scheme:dark){#seo-content{color:#cbd5e1}#seo-content h2,#seo-content h3{color:#f1f5f9}#seo-content .example{background:#1e293b;border-color:#334155}}
+    
   </style>
   <p>This free online metronome keeps a steady, adjustable beat for practising an instrument, singing or drilling rhythms — no app download or sign-up required. Set your tempo in beats per minute (BPM), press start, and play along to build the rock-solid timing that separates tidy performances from sloppy ones.</p>
   <h2>How the Online Metronome Works</h2>
@@ -302,5 +311,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Metronome />);
     <h3>What is a good BPM to practise at?</h3>
     <p>Start slow enough to play a passage perfectly, often 60–90 BPM, then raise the tempo in small 5 BPM steps as it gets cleaner. Speed is a by-product of accuracy, not the goal itself.</p>
 </section>
+<footer style="border-top:1px solid #e2e8f0;background:#ffffff;margin-top:48px;padding:28px 24px;text-align:center;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#64748b;line-height:1.8">
+<div style="font-weight:700;color:#0f172a;font-size:15px">⚡ Tabutility</div>
+<div>Free, private, browser-based tools. No sign-up, no tracking.</div>
+<div><a href="https://tabutility.com" style="color:#0f172a;font-weight:600;text-decoration:none">All Tools</a> · <a href="https://tabutility.com/blog/" style="color:#64748b;text-decoration:none">Blog</a> · <a href="https://tabutility.com/#about" style="color:#64748b;text-decoration:none">About</a></div>
+<div style="margin-top:6px;color:#94a3b8">© 2026 Tabutility</div>
+</footer>
 </body>
 </html>
